@@ -12,3 +12,6 @@ $blogenviron = new atype(array());
 $texttest = $blog_environ->parse('*hi*');
 echo $texttest;
 ```
+
+
+> lol
