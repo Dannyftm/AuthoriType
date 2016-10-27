@@ -18,4 +18,4 @@ echo $texttest;
 Headers
 
 
-> \# hi (by default # = h1 but \#+2-6 w will change it to said number ex[\#2] = <h2>)
+> \# hi (by default # = h1 but \#+2-6 w will change it to said number ex[\#2] = h2)
