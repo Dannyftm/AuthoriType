@@ -12,7 +12,6 @@
 	Be default everything is parsed, to escape things add keys to the array with the desired escape key
 	example: $textenv = new atype(array('images','links')); - escapes links and images
 */
-
 class atype
 {	
 	//constraints are read as 0 = true 1 = false; change
@@ -76,9 +75,3 @@ class atype
         return $text;
     }
 }
-
-$text = new atype(array(''));
-echo $text->parse('
-##2 This is a test
-[http://google.com](clie)
-');
