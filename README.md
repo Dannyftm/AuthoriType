@@ -1,7 +1,14 @@
 # AuthoriType
 
 ## What is it 
-AuthoriType is a parser which analyzes string and turns it into a readable output.
+AuthoriType is a text-to-html parser that's based on MarkDown. It's primary use is to create a controlled parsing environment and it's created to be used as a multi-purpose parser
 
 ## How do I use it 
-idk yet
+```php
+require('AuthoriType.php');
+
+//Create a new class
+$blogenviron = new atype(array());
+$texttest = $blog_environ->parse('*hi*');
+echo $texttest;
+```
