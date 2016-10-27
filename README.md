@@ -13,5 +13,8 @@ $texttest = $blog_environ->parse('*hi*');
 echo $texttest;
 ```
 
+## Syntax
 
-> lol
+Headers
+
+> \# hi 
