@@ -12,16 +12,20 @@
 	Be default everything is parsed, to escape things add keys to the array with the desired escape key
 	example: $textenv = new atype(array('images','links')); - escapes links and images
 */
+
 class atype
 {	
 	//constraints are read as 0 = true 1 = false; change
-    public $constraints = array(
+     public $constraints = array(
     	'headers' => '0',
     	'textcolor' => '0',
     	'links' => '0',
     	'images' => '0',
     	'ordered lists' => '0',
-    	'codesnippets' => '0'
+    	'codesnippets' => '0',
+        'italics' => '0',
+        'bold' => '0',
+        'strikethrough' => '0',
     );
     
     //Creates a custom class called by $newclass -> new atype(array())
@@ -69,6 +73,21 @@ class atype
             $text = preg_replace('/test/','<span style="color:rgb($1,$2,$3)">$4</span>',$text);
             //Hex Colors
             $text = preg_replace('/test/','<span style="color:$1">$2</span>',$text);
+        }
+        
+        //Parses Italics
+        if ($this->constraints['italics'] == '0') {
+			$text = preg_replace('/[*](\w+)[*]/', '<i>$1</i>', $text);
+        }
+        
+        //Parses Bold
+        if ($this->constraints['bold'] == '0') {
+			$text = preg_replace('/[*]{2}(\w+)[*]{2}/', '<b>$1</b>', $text);
+        }
+        
+        //Parses StrikeThrough
+        if ($this->constraints['strikethrough'] == '0') {
+			$text = preg_replace('/[~](\w+)[~]/', '<span style="text-decoration: line-through;">$1</i>', $text);
         }
         
         //Returns Parsed HTML
