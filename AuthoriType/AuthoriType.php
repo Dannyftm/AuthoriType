@@ -1,5 +1,6 @@
 <?php
-/*AuthoriType Created By Carter Bland
+/*AuthoriType Created By Carter Bland @ carterbland.com
+
 */
 class atype
 {	
@@ -27,8 +28,18 @@ class atype
     public function parse($text)
     {
         if ($this->constraints['headers'] == "0") {
-            $text = preg_replace('/[*]{1}(\w[a-zA-Z0-9 ]+)[*]{1}/', "<h4 style='margin:0px;top:5px'>" . '$1' . "</h4>", $text);
+            $text = preg_replace('/(?!*)[*]{1}(\w[a-zA-Z0-9 ]+)[*]{1}(?<!*)/', "<h3 style='margin:0px;top:5px'>" . '$1' . "</h3>", $text);
+            $text = preg_replace('/(?!*)[*]{2}(\w[a-zA-Z0-9 ]+)[*]{2}(?<!*)/', "<h4 style='margin:0px;top:5px'>" . '$1' . "</h4>", $text);
         }
         return $text;
     }
 }
+
+/*
+Example
+
+Creates a a new atype
+$test = new atype(array('images','textcolor'));
+Sends through the new params
+echo $test->parse('*hi*');
+*/
