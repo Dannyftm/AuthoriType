@@ -1,5 +1,6 @@
 <?php
-/*AuthoriType Created By Carter Bland @ carterbland.com
+/*
+    AuthoriType Created By Carter Bland @ carterbland.com
 */
 
 class atype
