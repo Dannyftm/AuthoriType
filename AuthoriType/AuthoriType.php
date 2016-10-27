@@ -12,6 +12,7 @@
 	Be default everything is parsed, to escape things add keys to the array with the desired escape key
 	example: $textenv = new atype(array('images','links')); - escapes links and images
 */
+
 class atype
 {	
 	//constraints are read as 0 = true 1 = false; change
