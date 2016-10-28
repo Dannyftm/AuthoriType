@@ -25,7 +25,8 @@ class atype
     	'codesnippets' => '0',
     	'italics' => '0',
     	'bold' => '0',
-    	'strikethrough' => '0'
+    	'strike' => '0',
+        'comments' => '0'
     );
     
     //How codesnippets interpretes code, if language isn't defined it will log
@@ -33,8 +34,13 @@ class atype
     	'lua' => array(
         	'reserved_words' => 'and/break/do/else/elseif/end/false/for/function/if/in/local/nil/not/or/repeat/return/then/true/until/while',
         	'default_color' => 'rgb(0,0,0)',
-        	'special_word_colors' => array('and' => 'rgb(200,0,0)'),
+        	'special_word_colors' => array(
+                'false' => 'rgb(200,0,0)',
+                'nil' => 'rgb(200,0,0)',
+                'true' => 'rgb(200,0,0)'
+            ),
         	'string_concats' => '.',
+            'concat_color' => 'rgb',
         	'string_identifiers' => '3' //1 = " 2 = ' 3 = " and '
         	)
     );
@@ -66,8 +72,10 @@ class atype
     
     public function parse($text = "") {
     	if (is_string($text)) {
-    		//Escapes Important Characters
+            
+            //Escapes Important Characters
     		$text = htmlEntities($text);
+            
     		//Builds Headers
     		if ($this->constraints['headers']=="0") {
     			$text = $text = preg_replace('/[#]{2}[ ]{1}([^\n]+)\n/', '<h1>$1</h1>', $text);
@@ -105,11 +113,33 @@ class atype
     		
     		//Builds Italics
     		if ($this->constraints['italics']=="0") {
-    			$text = preg_replace('/[\*]{1}([^*]+)[\*]{1}(?! *\<\/img>)/','<i>$1</i>',$text);
+    			$text = preg_replace('/(?<!\*)\*{1}([^*]+)[\*]{1}(?! *\<\/img>|\<\/a>)/','<i>$1</i>',$text);
     		} else {
     			array_push($this->p_log,'Parsing Parameter Caught: Italics');
     		}
-    		
+            
+    		//Builds Bold
+    		if ($this->constraints['bold']=="0") {
+    			$text = preg_replace('/(?<!\*)\*{2}([^*]+)[\*]{2}(?! *\<\/img>|\<\/a>)/','<b>$1</b>',$text);
+    		} else {
+    			array_push($this->p_log,'Parsing Parameter Caught: Bold');
+    		}
+            
+            //Builds Strike
+    		if ($this->constraints['strike']=="0") {
+    			$text = preg_replace('/(?<!\-)\-{1}([^-]+)[\-]{1}(?! *\<\/img>|\<\/a>)/','<strike>$1</strike>',$text);
+    		} else {
+    			array_push($this->p_log,'Parsing Parameter Caught: Strike');
+    		}
+            
+             
+            //Builds Comments
+    		if ($this->constraints['comments']=="0") {
+    			$text = preg_replace('/\|{1}([^\|\n]+)/','<div style="position:relative;height:auto;width:auto;"><span style="opacity:.8;padding-left:10px">$1</span><div style="position:absolute;height:100%;width:5px;top:0%;background-color:rgb(150,150,150)"></div></div>',$text);
+    		} else {
+    			array_push($this->p_log,'Parsing Parameter Caught: Comments');
+    		}
+            
     		//Builds Color Text
     		if ($this->constraints['textcolor']) {
     			
