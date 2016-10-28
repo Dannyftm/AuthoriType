@@ -9,7 +9,7 @@ require('AuthoriType.php');
 
 //Create a new class
 $blogenviron = new atype(array());
-$texttest = $blog_environ->parse('*hi*');
+$texttest = $blog_environ->parse('## hi');
 echo $texttest;
 ```
 
