@@ -67,12 +67,7 @@ class atype
     public function parse($text = "") {
     	if (is_string($text)) {
     		//Escapes Important Characters
-    		$text = preg_replace('/[<]/','<',$text);
-    		$text = preg_replace('/[>]/','>',$text);
-    		$text = preg_replace('/["]/','"',$text);
-    		$text = preg_replace("/[']/",'\'',$text);
-    		$text = preg_replace('/[&]/','&',$text);
-    		
+    		$text = htmlEntities($text);
     		//Builds Headers
     		if ($this->constraints['headers']=="0") {
     			$text = $text = preg_replace('/[#]{2}[ ]{1}([^\n]+)\n/', '<h1>$1</h1>', $text);
@@ -83,14 +78,14 @@ class atype
     		
     		//Builds Images
     		if ($this->constraints['images']=="0") {
-    			$text = preg_replace('/!\[([a-zA-Z0-9]+)\]\(([^*]+)\)/', '<img src="$2" alt="$1"></img>', $text);
+    			$text = preg_replace('/\!\[([a-zA-Z0-9 ]+)\]\(([^\[\]\(\)]+)\)/', '<img src="$2" alt="$1" style="position:relative;width:80%;height:auto;left:10%"></img>', $text);
     		} else {
     			array_push($this->p_log,'Parsing Parameter Caught: Images');
     		}
     		
             //Builds Links
     		if ($this->constraints['links']=="0") {
-    			$text = preg_replace('/\[([a-zA-Z0-9]+)\]\(([^*]+)\)/', '<a href="$2">$1</a>', $text);
+    			$text = preg_replace('/(?<!\!)\[([a-zA-Z0-9 ]+)\]\(([^\[\]]+)\)/', '<a href="$2">$1</a>', $text);
     		} else {
     			array_push($this->p_log,'Parsing Parameter Caught: Links');
     		}
@@ -122,6 +117,7 @@ class atype
     			array_push($this->p_log,'Parsing Parameter Caught: Color Text');
     		}
  			//Returns parsed text
+            $text = preg_replace('/\n/',' <br> ',$text);
     		return $text;
     	} else {
     		throw new Exception('Parsing Error: Wrong Format'); //Throws if $text isn't string.
